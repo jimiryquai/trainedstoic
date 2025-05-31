@@ -22,9 +22,12 @@ const { title = "Freedom Stack v2" } = Astro.props as Props;
   </body>
 
   {/* AlpineJS */}
-  <script type="module">
+  <script>
     import Alpine from "alpinejs";
+    // @ts-ignore - No types for this package
+    import ajax from "@imacrayon/alpine-ajax";
     window.Alpine = Alpine;
+    Alpine.plugin(ajax);
     Alpine.start();
   </script>
 </html>

@@ -6,10 +6,10 @@ I've used it in many projects, including as a home screen launcher on an Android
 
 Here's what I'm thinking...
 
-- Astro
-- AlpineJS + Alpine AJAX
-- TailwindCSS + Basecoat UI (Or, Franken UI)
-- Convex + Convex Auth (Or, Better Auth)
+- [x] Astro
+- [x] AlpineJS + Alpine AJAX
+- [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
+- [ ] Convex + Convex Auth (Or, Better Auth)
 
 Rules:
 - Must be affordable tech
