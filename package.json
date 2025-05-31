@@ -3,7 +3,7 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "concurrently \"npm run astro:dev\" \"npm run convex:dev\" --names \"astro,convex\" --prefix-colors \"cyan,magenta\"",
+    "dev": "PUBLIC_CONVEX_URL=\"$(grep CONVEX_URL .env.local | cut -d '=' -f2 | tr -d '\"')\" concurrently \"npm run astro:dev\" \"npm run convex:dev\" --names \"astro,convex\" --prefix-colors \"cyan,magenta\"",
     "astro:dev": "astro dev",
     "convex:dev": "convex dev",
     "build": "astro build",
@@ -20,6 +20,7 @@
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
-    "@types/alpinejs": "^3.13.11"
+    "@types/alpinejs": "^3.13.11",
+    "concurrently": "^9.1.2"
   }
 }
