@@ -59,34 +59,33 @@ import Layout from '../layouts/Layout.astro';
 
   <script>
     import Alpine from "alpinejs";
-    import { ConvexHttpClient } from "convex/browser";
+    import { ConvexClient } from "convex/browser";
     import { api } from "../../convex/_generated/api.js";
     
     // Initialize Convex client
-    const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
+    const convexClient = new ConvexClient(import.meta.env.PUBLIC_CONVEX_URL);
     
     document.addEventListener("alpine:init", () => {
       Alpine.data("messages", () => ({
         messages: [] as typeof api.messages.list._returnType,
-        async loadMessages() {
-          const messages = await convex.query(api.messages.list);
-          this.messages = messages;
-        },
         async sendMessage(author: string, text: string) {
-          await convex.mutation(api.messages.send, { author, text });
-          await this.loadMessages();
+          await convexClient.mutation(api.messages.send, { author, text });
         },
         $form: {
-          async '@submit'(e: Event) {
-            e.preventDefault();
-            const formData = new FormData(e.target as HTMLFormElement);
+          async '@submit'({ target: formElement, preventDefault }: { target: HTMLFormElement, preventDefault: () => void }) {
+            preventDefault();
+            const formData = new FormData(formElement);
             const author = formData.get('author') as string;
             const text = formData.get('text') as string;
             await this.sendMessage(author, text);
+            // Reset the form
+            formElement.reset();
           }
         },
         init() {
-          this.loadMessages();
+          convexClient.onUpdate(api.messages.list, {}, (messages) => {
+            this.messages = messages;
+          });
         }
       }));
     });
