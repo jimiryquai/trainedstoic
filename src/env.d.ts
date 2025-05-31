@@ -6,3 +6,5 @@ declare global {
     Alpine: import("alpinejs").Alpine;
   }
 }
+
+export {};
