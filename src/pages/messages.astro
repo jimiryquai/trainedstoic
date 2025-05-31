@@ -3,13 +3,13 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Messages - Freedom Stack v2">
-  <main class="container mx-auto p-8">
+  <main x-data="messages" class="container mx-auto p-8">
     <h1 class="text-3xl font-bold mb-6">Messages</h1>
     
     <!-- Message form -->
     <div class="mb-8 p-6 bg-gray-100 rounded-lg">
       <h2 class="text-xl font-semibold mb-4">Send a Message</h2>
-      <form id="messageForm" class="space-y-4">
+      <form x-bind="$form" id="messageForm" class="space-y-4">
         <div>
           <label for="author" class="block text-sm font-medium text-gray-700">Author</label>
           <input 
@@ -43,104 +43,52 @@ import Layout from '../layouts/Layout.astro';
     <div>
       <h2 class="text-xl font-semibold mb-4">Messages</h2>
       <div id="messagesList" class="space-y-4">
-        <div class="text-gray-500">Loading messages...</div>
+        <div x-show="!messages.length">
+          <div class="text-gray-500">Loading messages...</div>
+        </div>
+        <template x-for="message in messages" :key="message._id"> 
+          <div class="bg-white p-4 rounded-lg shadow border"> 
+            <div class="font-semibold text-gray-900" x-text="message.author"></div>
+            <div class="text-gray-700 mt-1" x-text="message.text"></div>
+            <div class="text-xs text-gray-500 mt-2" x-text="new Date(message._creationTime).toLocaleString()"></div>
+          </div>
+        </template>
       </div>
     </div>
   </main>
 
   <script>
+    import Alpine from "alpinejs";
     import { ConvexHttpClient } from "convex/browser";
     import { api } from "../../convex/_generated/api.js";
     
     // Initialize Convex client
     const convex = new ConvexHttpClient(import.meta.env.PUBLIC_CONVEX_URL);
     
-    // Load messages
-    async function loadMessages() {
-      try {
-        const messages = await convex.query(api.messages.list);
-        const messagesList = document.getElementById('messagesList');
-        
-        if (!messagesList) return;
-        
-        if (messages.length === 0) {
-          messagesList.innerHTML = '<div class="text-gray-500">No messages yet. Send the first one!</div>';
-          return;
+    document.addEventListener("alpine:init", () => {
+      Alpine.data("messages", () => ({
+        messages: [] as typeof api.messages.list._returnType,
+        async loadMessages() {
+          const messages = await convex.query(api.messages.list);
+          this.messages = messages;
+        },
+        async sendMessage(author: string, text: string) {
+          await convex.mutation(api.messages.send, { author, text });
+          await this.loadMessages();
+        },
+        $form: {
+          async '@submit'(e: Event) {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            const author = formData.get('author') as string;
+            const text = formData.get('text') as string;
+            await this.sendMessage(author, text);
+          }
+        },
+        init() {
+          this.loadMessages();
         }
-        
-        messagesList.innerHTML = messages.map(message => `
-          <div class="bg-white p-4 rounded-lg shadow border">
-            <div class="font-semibold text-gray-900">${escapeHtml(message.author)}</div>
-            <div class="text-gray-700 mt-1">${escapeHtml(message.text)}</div>
-            <div class="text-xs text-gray-500 mt-2">
-              ${new Date(message._creationTime).toLocaleString()}
-            </div>
-          </div>
-        `).join('');
-      } catch (error) {
-        console.error('Error loading messages:', error);
-        const messagesList = document.getElementById('messagesList');
-        if (messagesList) {
-          messagesList.innerHTML = 
-            '<div class="text-red-500">Error loading messages. Please try again.</div>';
-        }
-      }
-    }
-    
-    // Send message
-    async function sendMessage(author: string, text: string) {
-      try {
-        await convex.mutation(api.messages.send, { author, text });
-        await loadMessages(); // Reload messages
-        return true;
-      } catch (error) {
-        console.error('Error sending message:', error);
-        return false;
-      }
-    }
-    
-    // Escape HTML to prevent XSS
-    function escapeHtml(text: string) {
-      const div = document.createElement('div');
-      div.textContent = text;
-      return div.innerHTML;
-    }
-    
-    // Handle form submission
-    const messageForm = document.getElementById('messageForm') as HTMLFormElement;
-    if (messageForm) {
-      messageForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        
-        const formData = new FormData(e.target as HTMLFormElement);
-        const author = formData.get('author') as string;
-        const text = formData.get('text') as string;
-        
-        const submitButton = (e.target as HTMLFormElement).querySelector('button[type="submit"]') as HTMLButtonElement;
-        if (submitButton) {
-          submitButton.disabled = true;
-          submitButton.textContent = 'Sending...';
-        }
-        
-        const success = await sendMessage(author, text);
-        
-        if (success) {
-          (e.target as HTMLFormElement).reset(); // Clear form
-        } else {
-          alert('Failed to send message. Please try again.');
-        }
-        
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = 'Send Message';
-        }
-      });
-    }
-    
-    // Load messages on page load
-    loadMessages();
-    
-    // Optionally, poll for new messages every 5 seconds
-    setInterval(loadMessages, 5000);
+      }));
+    });
   </script>
 </Layout> 
