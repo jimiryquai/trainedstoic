@@ -19,6 +19,14 @@ Rules:
 
 ## Setup
 
+Using Node Version Manager? 
+
+```bash
+nvm use
+```
+
+Install the packages.
+
 ```bash
 npm install
 ```
@@ -28,6 +36,8 @@ First time? Setup your Convex instance:
 ```bash
 npm run convex:dev
 ```
+
+Now, let's run the app!
 
 ```bash
 npm run dev
