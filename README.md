@@ -17,7 +17,15 @@ Rules:
 - Must feel elementary/vanilla to use and be easy to learn
 - Must be entirely self-hostable (if needed)
 
-### FAQ
+## Developing with Cursor
+
+From `Cursor Settings` > `Features` > `Docs` add new doc, add the following URLs one at a time:
+1. "https://docs.convex.dev"
+2. "https://basecoatui.com"
+3. "https://alpinejs.dev"
+4. "https://docs.astro.build"
+
+## FAQ
 
 Q: Why not use Convex Auth? 
 
