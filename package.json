@@ -3,9 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "PUBLIC_CONVEX_URL=\"$(grep CONVEX_URL .env.local | cut -d '=' -f2 | tr -d '\"')\" concurrently \"npm run astro:dev\" \"npm run convex:dev\" --names \"astro,convex\" --prefix-colors \"cyan,magenta\"",
-    "astro:dev": "astro dev",
-    "convex:dev": "convex dev",
+    "dev": "PUBLIC_CONVEX_URL=\"$(grep CONVEX_URL .env.local | cut -d '=' -f2 | tr -d '\"')\" concurrently \"npm run _astro:dev\" \"npm run _convex:dev\" --names \"astro,convex\" --prefix-colors \"cyan,magenta\"",
+    "_astro:dev": "astro dev",
+    "_convex:dev": "convex dev",
+    "convex:dashboard": "convex dashboard",
+    "convex:docs": "convex docs",
+    "convex:deploy": "convex deploy",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
