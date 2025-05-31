@@ -3,11 +3,12 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "astro dev",
+    "dev": "concurrently \"npm run astro:dev\" \"npm run convex:dev\" --names \"astro,convex\" --prefix-colors \"cyan,magenta\"",
+    "astro:dev": "astro dev",
+    "convex:dev": "convex dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro",
-    "convex:setup": "convex dev"
+    "astro": "astro"
   },
   "dependencies": {
     "@imacrayon/alpine-ajax": "^0.12.2",

@@ -23,8 +23,14 @@ Rules:
 npm install
 ```
 
+First time? Setup your Convex instance:
+
 ```bash
-npm run convex:setup
+npm run convex:dev
+```
+
+```bash
+npm run dev
 ```
 
 ## Developing with Cursor
