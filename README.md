@@ -17,6 +17,16 @@ Rules:
 - Must feel elementary/vanilla to use and be easy to learn
 - Must be entirely self-hostable (if needed)
 
+## Setup
+
+```bash
+npm install
+```
+
+```bash
+npm run convex:setup
+```
+
 ## Developing with Cursor
 
 From `Cursor Settings` > `Features` > `Docs` add new doc, add the following URLs one at a time:
