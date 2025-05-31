@@ -9,9 +9,16 @@ Here's what I'm thinking...
 - [x] Astro
 - [x] AlpineJS + Alpine AJAX
 - [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
-- [ ] Convex + Convex Auth (Or, Better Auth)
+- [ ] Convex
+- [ ] ~~Convex Auth~~ (Or, Better Auth)
 
 Rules:
 - Must be affordable tech
 - Must feel elementary/vanilla to use and be easy to learn
 - Must be entirely self-hostable (if needed)
+
+### FAQ
+
+Q: Why not use Convex Auth? 
+
+_"Convex Auth currently supports client-side React web apps served from a CDN and React Native mobile apps ([Convex](https://docs.convex.dev/auth/convex-auth))."_ Since we're not using React in our Astro app, we can't use Convex Auth at this time. 
