@@ -1,5 +1,5 @@
 ---
-import "../styles/global.css";
+import "@/styles/global.css";
 
 interface Props {
   title: string;
@@ -23,6 +23,7 @@ const { title = "Freedom Stack v2" } = Astro.props as Props;
 
   {/* AlpineJS */}
   <script>
+    // @ts-ignore - No up to date types for this package
     import Alpine from "alpinejs";
     // @ts-ignore - No types for this package
     import ajax from "@imacrayon/alpine-ajax";
