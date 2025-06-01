@@ -41,6 +41,11 @@ export const config = {
       enabled: true,
       jwt: {
         secret: randomString(64)
+      },
+      roles: {
+        admin: {
+          permissions: ["*"]
+        }
       }
     }
   },
