@@ -12,7 +12,7 @@ export async function getApp() {
 
 export async function getApi(headers: Headers, opts: { verify: boolean } ) {
   const app = await getApp();
-  
+
   if (opts?.verify) {
     const api = app.getApi({ headers });
     await api.verifyAuth();
