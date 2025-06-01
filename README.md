@@ -1,7 +1,7 @@
 # Freedom Stack v2 (WIP)
 
 > [!IMPORTANT]
-> I will be removing Convex in favor of Bknd.io soon.
+> Still a work in progress. Getting better by the minute. Almost ready.
 
 I've learned a lot since the first iteration of Freedom Stack.
 
