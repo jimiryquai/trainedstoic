@@ -3,7 +3,7 @@
   "trailingComma": "none",
   "printWidth": 120,
   "tabWidth": 2,
-  "plugins": ["prettier-plugin-astro"],
+  "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
   "overrides": [
     {
       "files": "*.astro",
