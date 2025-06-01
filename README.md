@@ -9,15 +9,16 @@ I've used it in many projects, including as a home screen launcher on an Android
 
 Here's what I'm thinking...
 
-- [x] Astro
-- [x] AlpineJS + Alpine AJAX
-- [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
-- [~] [Bknd](https://bknd.io)
-
 Rules:
 - Must be affordable tech
 - Must feel elementary/vanilla to use and be easy to learn
 - Must be entirely self-hostable (if needed)
+
+- [x] Astro
+- [x] AlpineJS + Alpine AJAX
+- [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
+- [~] [Bknd](https://bknd.io)
+- [x] Netlify [(But you can use other ways of deployment)](https://docs.astro.build/en/guides/integrations-guide/)
 
 ## Setup
 
