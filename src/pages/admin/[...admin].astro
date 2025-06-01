@@ -1,25 +1,43 @@
 ---
 import { Admin } from "bknd/ui";
 import "bknd/dist/styles.css";
+import { Api, type ApiOptions } from "bknd/client";
 
-import { getApi } from "bknd/adapter/astro";
+type TAstro = {
+   request: Request;
+};
+
+type Options = {
+   mode?: "static" | "dynamic";
+} & Omit<ApiOptions, "host"> & {
+      host?: string;
+   };
+
+async function getApi(Astro: TAstro, options: Options = { mode: "static" }) {
+   const api = new Api({
+      host: new URL(Astro.request.url).origin,
+      headers: options.mode === "dynamic" ? Astro.request.headers : undefined
+   });
+   await api.verifyAuth();
+   return api;
+}
 
 const api = await getApi(Astro, { mode: "dynamic" });
-const user = api.getUser();
-
-export const prerender = false;
+const user = api.getUser() ?? undefined;
 ---
 
 <html>
    <body>
       <Admin
-         withProvider={{ user }}
+         withProvider={{
+            user
+         }}
          config={{
             basepath: "/admin",
-            color_scheme: "dark",
+            theme: "dark",
             logo_return_path: "/../"
          }}
-         client:only
+         client:only="react"
       />
    </body>
 </html>
