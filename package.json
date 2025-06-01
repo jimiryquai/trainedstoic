@@ -3,27 +3,26 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "PUBLIC_CONVEX_URL=\"$(grep CONVEX_URL .env.local | cut -d '=' -f2 | tr -d '\"')\" concurrently \"npm run _astro:dev\" \"npm run _convex:dev\" --names \"astro,convex\" --prefix-colors \"cyan,magenta\"",
-    "_astro:dev": "astro dev",
-    "_convex:dev": "convex dev",
-    "convex:dashboard": "convex dashboard",
-    "convex:docs": "convex docs",
-    "convex:deploy": "convex deploy",
+    "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^4.3.0",
     "@imacrayon/alpine-ajax": "^0.12.2",
     "@tailwindcss/vite": "^4.1.8",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
     "alpinejs": "^3.14.9",
     "astro": "^5.8.1",
     "basecoat-css": "^0.1.2",
-    "convex": "^1.24.3",
+    "bknd": "^0.13.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
-    "@types/alpinejs": "^3.13.11",
-    "concurrently": "^9.1.2"
+    "@types/alpinejs": "^3.13.11"
   }
 }
