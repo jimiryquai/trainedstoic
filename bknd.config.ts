@@ -77,8 +77,8 @@ export default {
 
       // and create a user
       await ctx.app.module.auth.createUser({
-        email: "test@bknd.io",
-        password: "12345678"
+        email: "admin@example.com",
+        password: "password"
       });
     }
   }
