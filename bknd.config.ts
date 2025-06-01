@@ -1,4 +1,5 @@
 import type { AstroBkndConfig } from "bknd/adapter/astro";
+import type { APIContext } from "astro";
 import { registerLocalMediaAdapter } from "bknd/adapter/node";
 import { boolean, em, entity, number, text } from "bknd/data";
 import { secureRandomString } from "bknd/utils";
@@ -37,9 +38,9 @@ declare module "bknd/core" {
 
 export default {
   // we can use any libsql config, and if omitted, uses in-memory
-  app: (env) => ({
+  app: (ctx: APIContext) => ({
     connection: {
-      url: env.DB_URL ?? "file:.astro/content.db"
+      url: process.env.DB_URL ?? "file:.astro/content.db"
     }
   }),
   // an initial config is only applied if the database is empty
@@ -85,4 +86,4 @@ export default {
       ]);
     }
   }
-} as const satisfies AstroBkndConfig;
+} as const satisfies AstroBkndConfig<APIContext>;

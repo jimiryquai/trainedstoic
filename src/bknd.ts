@@ -10,6 +10,7 @@ export async function getApp() {
 
 export async function getApi(astro: AstroGlobal, opts?: { mode: "static" } | { mode?: "dynamic"; verify?: boolean }) {
   const app = await getApp();
+
   if (opts?.mode !== "static" && opts?.verify) {
     const api = app.getApi({ headers: astro.request.headers });
     await api.verifyAuth();
