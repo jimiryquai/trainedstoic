@@ -30,3 +30,4 @@ pnpm-debug.log*
 
 # Bknd
 data.db
+/public/temp/uploads/*

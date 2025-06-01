@@ -62,7 +62,7 @@ export default {
     media: {
       enabled: true,
       adapter: local({
-        path: "./public/uploads"
+        path: "./public/temp/uploads"
       })
     }
   },
