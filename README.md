@@ -1,5 +1,8 @@
 # Freedom Stack v2 (WIP)
 
+> [!IMPORTANT]
+> I will be removing Convex in favor of Bknd.io soon.
+
 I've learned a lot since the first iteration of Freedom Stack.
 
 I've used it in many projects, including as a home screen launcher on an Android phone. 
@@ -9,8 +12,7 @@ Here's what I'm thinking...
 - [x] Astro
 - [x] AlpineJS + Alpine AJAX
 - [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
-- [ ] Convex
-- [ ] ~~Convex Auth~~ (Or, Better Auth)
+- [ ] [Bknd](https://bknd.io)
 
 Rules:
 - Must be affordable tech
