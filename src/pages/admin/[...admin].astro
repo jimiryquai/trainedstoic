@@ -1,9 +1,9 @@
 ---
 import { Admin } from "bknd/ui";
 import "bknd/dist/styles.css";
-import { getApi } from "@/utils/bknd";
+import { getApi } from "@/bknd.ts";
 
-const api = await getApi(Astro.request.headers, { verify: true });
+const api = await getApi(Astro, { verify: true });
 const user = api.getUser() ?? undefined;
 ---
 

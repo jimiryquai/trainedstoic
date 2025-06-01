@@ -21,7 +21,7 @@
   }
 
   .link {
-    @apply font-medium text-primary underline underline-offset-4;
+    @apply text-primary font-medium underline underline-offset-4;
   }
 
   .blockquote {
@@ -42,7 +42,7 @@
   }
 
   .table-head-row {
-    @apply m-0 border-t p-0 even:bg-muted;
+    @apply even:bg-muted m-0 border-t p-0;
   }
 
   .table-head-cell {
@@ -50,7 +50,7 @@
   }
 
   .table-row {
-    @apply m-0 border-t p-0 even:bg-muted;
+    @apply even:bg-muted m-0 border-t p-0;
   }
 
   .table-cell {
