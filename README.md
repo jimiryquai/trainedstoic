@@ -5,11 +5,12 @@
 
 I've learned a lot since the first iteration of Freedom Stack.
 
-I've used it in many projects, including as a home screen launcher on an Android phone. 
+I've used it in many projects, including as a home screen launcher on an Android phone.
 
 Here's what I'm thinking...
 
 Rules:
+
 - Must be affordable tech
 - Must feel elementary/vanilla to use and be easy to learn
 - Must be entirely self-hostable (if needed)
@@ -22,7 +23,7 @@ Rules:
 
 ## Setup
 
-Using Node Version Manager? 
+Using Node Version Manager?
 
 ```bash
 nvm use

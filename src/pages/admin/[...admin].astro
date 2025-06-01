@@ -8,17 +8,17 @@ const user = api.getUser() ?? undefined;
 ---
 
 <html>
-   <body>
-      <Admin
-         withProvider={{
-            user
-         }}
-         config={{
-            basepath: "/admin",
-            theme: "system",
-            logo_return_path: "/../"
-         }}
-         client:only="react"
-      />
-   </body>
+  <body>
+    <Admin
+      withProvider={{
+        user
+      }}
+      config={{
+        basepath: "/admin",
+        theme: "system",
+        logo_return_path: "/../"
+      }}
+      client:only="react"
+    />
+  </body>
 </html>
