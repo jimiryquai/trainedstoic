@@ -48,18 +48,11 @@ export default {
     data: schema.toJSON(),
     // we're enabling auth ...
     auth: {
+      allow_register: true,
       enabled: true,
       jwt: {
         issuer: "bknd-astro-example",
         secret: secureRandomString(64)
-      },
-      guard: {
-        enabled: true
-      },
-      roles: {
-        admin: {
-          permissions: ["*"]
-        }
       }
     },
     // ... and media
