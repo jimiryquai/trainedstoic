@@ -18,7 +18,7 @@ Rules:
 - [x] Astro
 - [x] AlpineJS + Alpine AJAX
 - [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
-- [~] [Bknd](https://bknd.io)
+- [x] [Bknd](https://bknd.io)
 - [x] Netlify [(But you can use other ways of deployment)](https://docs.astro.build/en/guides/integrations-guide/)
 
 ## Setup
