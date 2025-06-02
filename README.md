@@ -3,23 +3,25 @@
 > [!IMPORTANT]
 > Still a work in progress. Getting better by the minute. Almost ready.
 
-I've learned a lot since the first iteration of Freedom Stack.
+I've learned a lot since the first iteration of [Freedom Stack](https://github.com/cameronapak/freedom-stack).
 
 I've used it in many projects, including as a home screen launcher on an Android phone.
 
 Here's what I'm thinking...
 
-Rules:
+## Criteria for Freedom Stack v2
 
-- Must be affordable tech
-- Must feel elementary/vanilla to use and be easy to learn
-- Must be entirely self-hostable (if needed)
+1. Must feel elementary/vanilla to use and be easy to learn
+2. Must be affordable to host and maintain
+3. Must be entirely self-hostable (if needed)
 
-- [x] Astro
-- [x] AlpineJS + Alpine AJAX
-- [x] TailwindCSS + Basecoat UI ~~(Or, Franken UI)~~
-- [x] [Bknd](https://bknd.io)
-- [x] Netlify [(But you can use other ways of deployment)](https://docs.astro.build/en/guides/integrations-guide/)
+## Stack
+
+- [Astro](https://astro.build)
+- [Alpine.js](https://alpinejs.dev) + [Alpine AJAX](https://alpine-ajax.js.org/)
+- [TailwindCSS v4](https://tailwindcss.com/) + [Basecoat UI](https://basecoatui.com/)
+- [Bknd](https://bknd.io)
+- [Netlify](https://www.netlify.com)
 
 ## Setup
 
