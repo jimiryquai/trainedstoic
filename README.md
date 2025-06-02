@@ -15,6 +15,7 @@ Here's what I'm thinking...
 1. Must feel elementary/vanilla to use and be easy to learn
 2. Must be affordable to host and maintain
 3. Must be entirely self-hostable (if needed)
+4. Must use well-maintained, actively developed packages to ensure long-term sustainability
 
 ## Stack
 
