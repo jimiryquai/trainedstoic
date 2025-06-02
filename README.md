@@ -23,6 +23,14 @@ Here's what I'm thinking...
 - [Bknd](https://bknd.io)
 - [Netlify](https://www.netlify.com)
 
+## Install
+
+Run the following command to install this stack on your machine, without the commit history of this repo.
+
+```bash
+npx degit https://github.com/cameronapak/freedom-stack-v2 my-project
+```
+
 ## Setup
 
 Using Node Version Manager?
