@@ -1,7 +1,8 @@
 # Freedom Stack v2 (WIP)
 
 > [!IMPORTANT]
-> Still a work in progress. Getting better by the minute. Almost ready.
+> This project is still a work in progress. It's improving continuously and will be ready soon.
+> Documentation for using this project is currently limited but will be expanded shortly.
 
 I've learned a lot since the first iteration of [Freedom Stack](https://github.com/cameronapak/freedom-stack).
 
