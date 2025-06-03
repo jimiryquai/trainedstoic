@@ -20,7 +20,7 @@
     "alpinejs": "^3.14.9",
     "astro": "^5.8.1",
     "basecoat-css": "^0.1.2",
-    "bknd": "0.13.1-rc.0",
+    "bknd": "0.13.1-rc.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "tailwindcss": "^4.1.8"
