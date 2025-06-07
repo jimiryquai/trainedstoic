@@ -54,6 +54,9 @@ export default {
         issuer: "bknd-astro-example",
         secret: secureRandomString(64)
       },
+      guard: {
+        enabled: true,
+      },
       roles: {
         admin: {
           implicit_allow: true,
@@ -85,6 +88,20 @@ export default {
   options: {
     // the seed option is only executed if the database was empty
     seed: async (ctx) => {
+      // create an admin user
+      await ctx.app.module.auth.createUser({
+        email: "admin@example.com",
+        password: "password",
+        role: "admin"
+      });
+
+      // create a user
+      await ctx.app.module.auth.createUser({
+        email: "user@example.com",
+        password: "password",
+        role: "default"
+      });
+
       // create some entries
       await ctx.em.mutator("posts").insertMany([
         { title: "First post", slug: "first-post", content: "..." },
