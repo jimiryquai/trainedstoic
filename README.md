@@ -35,6 +35,14 @@ npx degit https://github.com/cameronapak/freedom-stack-v2 my-project
 
 ## Setup
 
+### Create User
+
+```bash
+npx tsx node_modules/.bin/bknd user create
+```
+
+### Run App
+
 Using Node Version Manager?
 
 ```bash

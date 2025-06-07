@@ -53,6 +53,25 @@ export default {
       jwt: {
         issuer: "bknd-astro-example",
         secret: secureRandomString(64)
+      },
+      roles: {
+        admin: {
+          implicit_allow: true,
+        },
+        default: {
+          permissions: [
+            "data.database.sync",
+            "data.entity.create",
+            "data.entity.delete",
+            "data.entity.update",
+            "data.entity.read",
+            "media.file.delete",
+            "media.file.read",
+            "media.file.list",
+            "media.file.upload",
+          ],
+          is_default: true,
+        }
       }
     },
     // ... and media
@@ -66,12 +85,6 @@ export default {
   options: {
     // the seed option is only executed if the database was empty
     seed: async (ctx) => {
-      // and create a user
-      await ctx.app.module.auth.createUser({
-        email: "admin@example.com",
-        password: "password"
-      });
-
       // create some entries
       await ctx.em.mutator("posts").insertMany([
         { title: "First post", slug: "first-post", content: "..." },
