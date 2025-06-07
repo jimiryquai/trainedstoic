@@ -1,7 +1,7 @@
 ---
 import { getApi } from "@/bknd.ts";
 import Layout from "@/layouts/Layout.astro";
-const api = await getApi(Astro, { verify: true, mode: "dynamic" });
+const api = await getApi(Astro.request.headers, { verify: true, mode: "dynamic" });
 
 const { data } = await api.data.readMany("posts");
 const user = api.getUser();
@@ -12,7 +12,7 @@ const user = api.getUser();
     <h1 class="heading-1">Freedom Stack v2</h1>
     <div class="grid grid-cols-2 items-center gap-4">
       <a href="/admin" class="btn btn-primary">Open Bknd Admin</a>
-      <a href="/admin/auth/register" class="btn btn-secondary">Register</a>
+      <a href="/register" class="btn btn-secondary">Register</a>
     </div>
     {user?.email ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}
   </section>

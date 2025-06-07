@@ -26,6 +26,7 @@
     "tailwindcss": "^4.1.8"
   },
   "devDependencies": {
+    "@types/alpinejs": "^3.13.11",
     "prettier": "^3.5.3",
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-tailwindcss": "^0.6.12"
