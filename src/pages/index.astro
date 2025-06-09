@@ -16,7 +16,7 @@ const user = api.getUser();
       <a href="/admin" class="btn btn-primary">Open Bknd Admin</a>
       <Authenticated>
         <a slot="fallback" href="/register" class="btn btn-secondary">Register</a>
-        <a href="/logout" class="btn btn-secondary">Logout</a>
+        <a href="/api/auth/logout" class="btn btn-secondary">Logout</a>
       </Authenticated>
     </div>
     {user?.email ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}
