@@ -1,0 +1,9 @@
+---
+import { getApi } from "@/bknd.ts";
+
+const api = await getApi(Astro.request.headers, { mode: "dynamic" });
+
+const user = await api.auth.me();
+---
+
+{user ? <slot /> : <slot name="fallback" />}
