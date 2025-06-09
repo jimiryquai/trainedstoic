@@ -3,7 +3,7 @@ import { Admin } from "bknd/ui";
 import "bknd/dist/styles.css";
 import { getApi } from "@/bknd.ts";
 
-const api = await getApi(Astro.request.headers, { verify: true });
+const api = await getApi(Astro.request.headers, { verify: true, mode: "dynamic" });
 const user = api.getUser() ?? undefined;
 ---
 
