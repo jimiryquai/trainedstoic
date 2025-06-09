@@ -54,12 +54,12 @@ export default {
         issuer: "bknd-astro-example",
         secret: secureRandomString(64)
       },
-      guard: {
-        enabled: true,
-      },
+      // guard: {
+      //   enabled: true
+      // },
       roles: {
         admin: {
-          implicit_allow: true,
+          implicit_allow: true
         },
         default: {
           permissions: [
@@ -71,9 +71,9 @@ export default {
             "media.file.delete",
             "media.file.read",
             "media.file.list",
-            "media.file.upload",
+            "media.file.upload"
           ],
-          is_default: true,
+          is_default: true
         }
       }
     },

@@ -3,23 +3,23 @@ import Layout from "@/layouts/Layout.astro";
 ---
 
 <Layout title="Login">
-  <section x-data="login" class="mx-auto flex max-w-md flex-col gap-4 p-6">
+  <section class="mx-auto flex max-w-md flex-col gap-4 p-6">
     <div class="card w-full">
       <header>
         <h2>Login to your account</h2>
         <p>Enter your details below to login to your account</p>
       </header>
       <section>
-        <form x-on:submit.prevent="login" class="form grid gap-6">
+        <form method="post" action="/api/auth/password/login" class="form grid gap-6">
           <div class="grid gap-2">
             <label for="demo-card-form-email">Email</label>
-            <input x-model="email" type="email" id="demo-card-form-email" />
+            <input name="email" type="email" id="demo-card-form-email" />
           </div>
           <div class="grid gap-2">
             <div class="flex items-center gap-2">
               <label for="demo-card-form-password">Password</label>
             </div>
-            <input x-model="password" type="password" id="demo-card-form-password" />
+            <input name="password" type="password" id="demo-card-form-password" />
           </div>
           <button type="submit" class="btn w-full">Login</button>
         </form>
@@ -31,32 +31,4 @@ import Layout from "@/layouts/Layout.astro";
       </footer>
     </div>
   </section>
-
-  <script>
-    import Alpine from "alpinejs";
-    import { actions } from "astro:actions";
-
-    document.addEventListener("alpine:init", () => {
-      Alpine.data("login", (el) => {
-        return {
-          email: "",
-          password: "",
-          async login() {
-            const { data, error } = await actions.login({
-              email: this.email,
-              password: this.password
-            });
-
-            if (error) {
-              console.error(error);
-            }
-
-            if (data && data.success) {
-              window.location.href = "/";
-            }
-          }
-        };
-      });
-    });
-  </script>
 </Layout>
