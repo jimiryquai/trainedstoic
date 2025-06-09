@@ -5,6 +5,14 @@ import { getApi } from "@/bknd.ts";
 
 const api = await getApi(Astro.request.headers, { verify: true, mode: "dynamic" });
 const user = api.getUser() ?? undefined;
+
+if (Astro.url.pathname === "/admin/auth/login") {
+  return Astro.redirect("/login");
+}
+
+if (Astro.url.pathname === "/admin/auth/register") {
+  return Astro.redirect("/register");
+}
 ---
 
 <html>
