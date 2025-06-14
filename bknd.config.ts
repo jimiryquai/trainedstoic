@@ -54,9 +54,9 @@ export default {
         issuer: "bknd-astro-example",
         secret: secureRandomString(64)
       },
-      guard: {
-        enabled: true
-      },
+      // guard: {
+      //   enabled: true
+      // },
       roles: {
         admin: {
           implicit_allow: true
