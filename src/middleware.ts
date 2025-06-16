@@ -3,6 +3,8 @@ import type { APIContext } from "astro";
 import { createRuntimeApp } from "bknd/adapter";
 import { config } from "./bknd";
 
+// Doing this because I want to redirect to our custom
+// login and register pages. This is optional!
 const bkndRedirects: Record<string, string> = {
   "/admin/auth/login": "/login",
   "/admin/auth/register": "/register"
