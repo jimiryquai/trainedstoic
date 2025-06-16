@@ -31,7 +31,7 @@ Here's the best explanation for the heart of [Bknd](https://docs.bknd.io/motivat
 
 ### Database
 
-Develop on a local libSQL database.
+Develop on a local libSQL database, included by default without needing to configure anything.
 
 When ready for production, I recommend using a database from [Turso](https://tur.so/freedomstack).
 
