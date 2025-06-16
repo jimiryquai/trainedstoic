@@ -3,6 +3,11 @@ import type { APIContext } from "astro";
 import { createRuntimeApp } from "bknd/adapter";
 import { config } from "./bknd";
 
+const bkndRedirects: Record<string, string> = {
+  "/admin/auth/login": "/login",
+  "/admin/auth/register": "/register"
+};
+
 export async function onRequest(context: APIContext, next: MiddlewareNext) {
   const request = context.request;
   const url = new URL(request.url);
@@ -21,6 +26,10 @@ export async function onRequest(context: APIContext, next: MiddlewareNext) {
   );
 
   if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/admin")) {
+    if (bkndRedirects[url.pathname]) {
+      return context.redirect(bkndRedirects[url.pathname]);
+    }
+
     try {
       const response = await app.fetch(request);
       return response;
