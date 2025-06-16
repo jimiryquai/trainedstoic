@@ -9,5 +9,7 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()]
   },
+  // This makes it where `/admin` and `/admin/` both work.
+  trailingSlash: "ignore",
   adapter: netlify()
 });
