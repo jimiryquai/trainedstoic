@@ -20,5 +20,16 @@ const user = api.getUser();
       </Authenticated>
     </div>
     {user?.email ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}
+    <h2 class="heading-2">Posts</h2>
+    <ul>
+      {
+        data.map((post) => (
+          <li>
+            <h3 class="heading-3">{post.title}</h3>
+            <p>{post.content}</p>
+          </li>
+        ))
+      }
+    </ul>
   </section>
 </Layout>
