@@ -21,9 +21,19 @@ export async function onRequest(context: APIContext, next: MiddlewareNext) {
   );
 
   if (url.pathname.startsWith("/api/") || url.pathname.startsWith("/admin")) {
-    const response = await app.fetch(request);
-    if (response.status !== 404) {
+    try {
+      const response = await app.fetch(request);
       return response;
+    } catch (error: any) {
+      console.error(error);
+      context.cookies.set(
+        "__bknd_flash",
+        error?.message ||
+          (import.meta.env.DEV
+            ? "An unknown error occurred. Check the console for more details."
+            : "An unknown error occurred.")
+      );
+      return context.redirect("/");
     }
   }
 

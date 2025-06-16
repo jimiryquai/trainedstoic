@@ -63,6 +63,7 @@ export default {
         },
         default: {
           permissions: [
+            "system.access.api",
             "data.database.sync",
             "data.entity.create",
             "data.entity.delete",
