@@ -10,12 +10,12 @@ import Authenticated from "./Authenticated.astro";
     </a>
     <div class="ml-auto flex items-center gap-2">
       <Authenticated>
-        <a class="btn btn-secondary" href="/admin">Admin</a>
-        <a class="btn btn-secondary" slot="fallback" href="/register">Register</a>
+        <a class="btn-ghost" href="/admin">Admin</a>
+        <a class="btn-ghost" slot="fallback" href="/register">Register</a>
       </Authenticated>
       <Authenticated>
-        <a class="btn btn-primary" slot="fallback" href="/login">Login</a>
-        <a class="btn btn-secondary" href="/logout">Logout</a>
+        <a class="btn-outline" slot="fallback" href="/login">Login</a>
+        <a class="btn-ghost" href="/logout">Logout</a>
       </Authenticated>
     </div>
   </div>

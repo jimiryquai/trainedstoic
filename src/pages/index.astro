@@ -1,7 +1,6 @@
 ---
 import { getApi } from "@/bknd.ts";
 import Layout from "@/layouts/Layout.astro";
-import Authenticated from "@/components/Authenticated.astro";
 
 const api = await getApi(Astro.request.headers, { verify: true, mode: "dynamic" });
 
@@ -12,13 +11,6 @@ const user = api.getUser();
 <Layout title="Freedom Stack v2">
   <section class="mx-auto flex max-w-md flex-col gap-4 p-6">
     <h1 class="heading-1">Freedom Stack v2</h1>
-    <div class="grid grid-cols-2 items-center gap-4">
-      <a href="/admin" class="btn btn-primary">Open Bknd Admin</a>
-      <Authenticated>
-        <a slot="fallback" href="/login" class="btn btn-secondary">Login</a>
-        <a href="/api/auth/logout" class="btn btn-secondary">Logout</a>
-      </Authenticated>
-    </div>
     {user?.email ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}
     <h2 class="heading-2">Posts</h2>
     <ul>
