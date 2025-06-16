@@ -4,12 +4,6 @@
 > This project is still a work in progress. It's improving continuously and will be ready soon.
 > Documentation for using this project is currently limited but will be expanded shortly.
 
-I've learned a lot since the first iteration of [Freedom Stack](https://github.com/cameronapak/freedom-stack).
-
-I've used it in many projects, including as a home screen launcher on an Android phone.
-
-Here's what I'm thinking...
-
 ## Criteria for Freedom Stack v2
 
 1. Must feel elementary/vanilla to use and be easy to learn
@@ -24,6 +18,22 @@ Here's what I'm thinking...
 - [TailwindCSS v4](https://tailwindcss.com/) + [Basecoat UI](https://basecoatui.com/)
 - [Bknd](https://bknd.io)
 - [Netlify](https://www.netlify.com), or host anywhere
+
+## Bknd
+
+> _"Experience the power of a lightweight, feature-rich backend that seamlessly integrates into your framework of choice."_
+
+Imagine having your own Supabase-like backend, but you could host it anywhere you'd like? That's Bknd.
+
+Since Bknd integrates into your framework of choice, it ships with Freedom Stack out of the box!
+
+Here's the best explanation for the heart of [Bknd](https://docs.bknd.io/motivation) and why it's perfect for Freedom Stack.
+
+### Database
+
+Develop on a local libSQL database.
+
+When ready for production, I recommend using a database from [Turso](https://tur.so/freedomstack).
 
 ## Install
 
@@ -60,9 +70,3 @@ Now, let's run the app!
 ```bash
 npm run dev
 ```
-
-## BKND.io
-
-### Questions
-
-1. Q: How do I pull data from BKND without being auth'd? Can my server be be authed to return data like blog posts?
