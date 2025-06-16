@@ -4,12 +4,17 @@
 > This project is still a work in progress. It's improving continuously and will be ready soon.
 > Documentation for using this project is currently limited but will be expanded shortly.
 
+## Tasks
+
+- [ ] Add `.cursorrules`
+
 ## Criteria for Freedom Stack v2
 
 1. Must feel elementary/vanilla to use and be easy to learn
 2. Must be affordable to host and maintain
 3. Must be entirely self-hostable (if needed)
 4. Must use well-maintained, actively developed packages to ensure long-term sustainability
+5. Must be able to work well with AI code editor assistants
 
 ## Stack
 
@@ -28,6 +33,11 @@ Imagine having your own Supabase-like backend, but you could host it anywhere yo
 Since Bknd integrates into your framework of choice, it ships with Freedom Stack out of the box!
 
 Here's the best explanation for the heart of [Bknd](https://docs.bknd.io/motivation) and why it's perfect for Freedom Stack.
+
+### Remaining Bknd things
+
+1. **issue (blocking)**: Given I am signed in as an admin, `/data/entity/users` page throws a 404 for some reason when trying to view list of users.
+2. **issue (blocking)**: Given I add a new table to the databse from the Bknd admin UI, then I'd like to have the TS types update, so that I can have intellisense for my Bknd schemas and type-safety.
 
 ### Database
 
