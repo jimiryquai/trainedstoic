@@ -7,12 +7,4 @@ declare global {
   }
 }
 
-declare namespace App {
-  interface Locals {
-    user?: {
-      token: string;
-    };
-  }
-}
-
 export {};
