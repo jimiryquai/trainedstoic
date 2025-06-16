@@ -7,6 +7,7 @@
 ## Tasks
 
 - [ ] Add `.cursorrules`
+- [ ] Can I add recommendations MCP's for each repo in `.vscode` folder?
 
 ## Criteria for Freedom Stack v2
 
