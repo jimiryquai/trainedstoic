@@ -60,3 +60,9 @@ Now, let's run the app!
 ```bash
 npm run dev
 ```
+
+## BKND.io
+
+### Questions
+
+1. Q: How do I pull data from BKND without being auth'd? Can my server be be authed to return data like blog posts?
