@@ -23,7 +23,7 @@ Here's what I'm thinking...
 - [Alpine.js](https://alpinejs.dev) + [Alpine AJAX](https://alpine-ajax.js.org/)
 - [TailwindCSS v4](https://tailwindcss.com/) + [Basecoat UI](https://basecoatui.com/)
 - [Bknd](https://bknd.io)
-- [Netlify](https://www.netlify.com)
+- [Netlify](https://www.netlify.com), or host anywhere
 
 ## Install
 
