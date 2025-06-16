@@ -70,3 +70,10 @@ Now, let's run the app!
 ```bash
 npm run dev
 ```
+
+## Main changes since v1
+
+1. We've replaced Astro DB with Bknd
+2. Better Auth has been replaced with Bknd's built-in auth
+3. Instead of using daisyUI, we now use Basecoat (think `shadcn-ui` but without React)
+4. Instead of HTMX, we use Alpine Ajax (if you don't know what either one of these are... it's okay)
