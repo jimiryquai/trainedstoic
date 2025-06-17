@@ -12,7 +12,7 @@
 ## Criteria for Freedom Stack v2
 
 1. Must feel elementary/vanilla to use and be easy to learn
-2. Must be affordable to host and maintain
+2. Must be financially accessible to all, meaning it should at least be able to be hosted for free at base tier without having to add a credit card
 3. Must be entirely self-hostable (if needed)
 4. Must use well-maintained, actively developed packages to ensure long-term sustainability
 5. Must be able to work well with AI code editor assistants
