@@ -31,12 +31,6 @@ const schema = em(
   }
 );
 
-// register your schema to get automatic type completion
-type Database = (typeof schema)["DB"];
-declare module "bknd/core" {
-  interface DB extends Database {}
-}
-
 export default {
   // we can use any libsql config, and if omitted, uses in-memory
   app: (ctx: APIContext) => ({
