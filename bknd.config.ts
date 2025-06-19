@@ -1,8 +1,9 @@
 import type { AstroBkndConfig } from "bknd/adapter/astro";
 import type { APIContext } from "astro";
 import { registerLocalMediaAdapter } from "bknd/adapter/node";
-import { boolean, em, entity, number, text } from "bknd/data";
+import { em, entity, number, text } from "bknd/data";
 import { secureRandomString } from "bknd/utils";
+import { syncTypes } from "bknd/plugins";
 
 // since we're running in node, we can register the local media adapter
 const local = registerLocalMediaAdapter();
@@ -108,6 +109,17 @@ export default {
         { title: "First post", slug: "first-post", content: "..." },
         { title: "Second post", slug: "second-post" }
       ]);
-    }
+    },
+    plugins: [
+      // Writes down the schema types on boot and config change,
+      // making sure the types are always up to date.
+      syncTypes({
+        enabled: true,
+        write: async (et) => {
+          // customize the location and the writer
+          await import("fs/promises").then((fs) => fs.writeFile("src/bknd-types.d.ts", et.toString()));
+        }
+      })
+    ]
   }
 } as const satisfies AstroBkndConfig<APIContext>;
