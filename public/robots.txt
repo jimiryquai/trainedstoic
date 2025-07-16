@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://trainedstoic.com/sitemap.xml
+
+# Disallow admin area
+Disallow: /admin/
+Disallow: /api/
+
+# Disallow development files
+Disallow: /*.json$
+Disallow: /*.yaml$
+Disallow: /*.yml$

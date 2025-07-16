@@ -1,0 +1,16 @@
+{
+  "name": "Trained Stoic",
+  "short_name": "Trained Stoic",
+  "description": "Ancient wisdom for modern challenges. A space for stoic philosophy, practical insights, and building resilience.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#667eea",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "any",
+      "type": "image/x-icon"
+    }
+  ]
+}

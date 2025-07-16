@@ -1,59 +1,176 @@
-@import "tailwindcss";
-@import "basecoat-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* Styles adopted from Shadcn UI */
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96%;
+    --secondary-foreground: 222.2 84% 4.9%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96%;
+    --accent-foreground: 222.2 84% 4.9%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Component classes */
 @layer components {
-  /* Typography classes */
   .heading-1 {
-    @apply scroll-m-20 text-2xl font-medium tracking-tight;
+    @apply text-4xl font-bold tracking-tight lg:text-5xl;
   }
-
+  
   .heading-2 {
-    @apply mt-10 scroll-m-20 border-b pb-2 text-2xl font-medium tracking-tight transition-colors first:mt-0;
+    @apply text-3xl font-semibold tracking-tight;
   }
-
+  
   .heading-3 {
-    @apply mt-8 scroll-m-20 text-xl font-medium tracking-tight;
+    @apply text-2xl font-semibold tracking-tight;
   }
-
-  .paragraph {
-    @apply leading-7 [&:not(:first-child)]:mt-6;
+  
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
-
-  .link {
-    @apply text-primary font-medium underline underline-offset-4;
+  
+  .btn-secondary {
+    @apply inline-flex items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground shadow-sm transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
-
-  .blockquote {
-    @apply mt-6 border-l-2 pl-6 italic;
+  
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
-
-  .list {
-    @apply my-6 ml-6 list-disc [&>li]:mt-2;
+  
+  .btn-ghost {
+    @apply inline-flex items-center justify-center rounded-md px-4 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-accent-foreground focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50;
   }
-
-  /* Table styles */
-  .table-container {
-    @apply my-6 w-full overflow-y-auto;
+  
+  .btn-sm {
+    @apply h-8 rounded-md px-3 text-xs;
   }
-
-  .table {
-    @apply w-full;
+  
+  .badge {
+    @apply inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2;
   }
-
-  .table-head-row {
-    @apply even:bg-muted m-0 border-t p-0;
+  
+  .badge-primary {
+    @apply border-transparent bg-primary text-primary-foreground shadow hover:bg-primary/80;
   }
-
-  .table-head-cell {
-    @apply border px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right;
+  
+  .card {
+    @apply rounded-xl border bg-card text-card-foreground shadow;
   }
-
-  .table-row {
-    @apply even:bg-muted m-0 border-t p-0;
+  
+  /* Prose styles for markdown content */
+  .prose {
+    @apply text-gray-700 max-w-none;
   }
-
-  .table-cell {
-    @apply border px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right;
+  
+  .prose h1 {
+    @apply text-3xl font-bold text-gray-900 mb-6 mt-0;
+  }
+  
+  .prose h2 {
+    @apply text-2xl font-bold text-gray-900 mb-4 mt-8;
+  }
+  
+  .prose h3 {
+    @apply text-xl font-bold text-gray-900 mb-3 mt-6;
+  }
+  
+  .prose p {
+    @apply text-gray-700 leading-relaxed mb-4;
+  }
+  
+  .prose a {
+    @apply text-blue-600 no-underline hover:underline;
+  }
+  
+  .prose strong {
+    @apply font-bold text-gray-900;
+  }
+  
+  .prose ul, .prose ol {
+    @apply text-gray-700 mb-4 pl-6;
+  }
+  
+  .prose li {
+    @apply text-gray-700 mb-1;
+  }
+  
+  .prose blockquote {
+    @apply text-gray-600 border-l-4 border-blue-500 pl-4 italic mb-4;
+  }
+  
+  .prose code {
+    @apply text-gray-900 bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+  }
+  
+  .prose pre {
+    @apply bg-gray-100 p-4 rounded-lg overflow-x-auto mb-4;
+  }
+  
+  .prose pre code {
+    @apply bg-transparent px-0 py-0;
   }
 }

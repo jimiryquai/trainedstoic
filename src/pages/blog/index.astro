@@ -1,0 +1,142 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import BlogCard from "@/components/BlogCard.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+
+// Use Keystatic reader for now until we fix content collections
+const reader = createReader(process.cwd(), keystaticConfig);
+const posts = await reader.collections.posts.all();
+const sortedPosts = posts.sort(
+  (a, b) => new Date(b.entry.publishedDate || '').getTime() - new Date(a.entry.publishedDate || '').getTime()
+);
+
+// Get unique tags for filter
+const allTags = [...new Set(posts.flatMap(post => post.entry.tags || []))];
+---
+
+<Layout title="Blog - Stoic Wisdom & Modern Insights">
+  <div class="mx-auto max-w-7xl px-6 py-12">
+    <!-- Header -->
+    <header class="text-center mb-12">
+      <h1 class="heading-1 mb-4">The Blog</h1>
+      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
+        Explore timeless stoic wisdom applied to modern challenges. Practical insights for building resilience, finding purpose, and living with virtue.
+      </p>
+    </header>
+
+    <!-- Tags Filter -->
+    {allTags.length > 0 && (
+      <div class="mb-12">
+        <h2 class="text-sm font-semibold text-muted-foreground mb-4">Filter by topic:</h2>
+        <div class="flex flex-wrap gap-2">
+          <button 
+            class="badge-filter active" 
+            data-filter="all"
+            onclick="filterPosts('all')"
+          >
+            All Posts
+          </button>
+          {allTags.map((tag) => (
+            <button 
+              class="badge-filter" 
+              data-filter={tag}
+              onclick={`filterPosts('${tag}')`}
+            >
+              {tag}
+            </button>
+          ))}
+        </div>
+      </div>
+    )}
+
+    <!-- Posts Grid -->
+    <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3" id="posts-grid">
+      {sortedPosts.map((post) => (
+        <BlogCard post={{
+          slug: post.slug, 
+          entry: {
+            title: post.entry.title,
+            description: post.entry.description || '',
+            publishedDate: post.entry.publishedDate || '',
+            featured: post.entry.featured || false,
+            author: post.entry.author || 'Trained Stoic',
+            image: post.entry.image || undefined,
+            tags: post.entry.tags ? [...post.entry.tags] : []
+          }
+        }} />
+      ))}
+    </div>
+
+    <!-- Empty State -->
+    <div id="no-posts" class="text-center py-12 hidden">
+      <p class="text-muted-foreground">No posts found for this filter.</p>
+      <button 
+        class="btn-outline mt-4"
+        onclick="filterPosts('all')"
+      >
+        Show All Posts
+      </button>
+    </div>
+  </div>
+</Layout>
+
+<script>
+  function filterPosts(tag: string) {
+    const cards = document.querySelectorAll('[data-tags]') as NodeListOf<HTMLElement>;
+    const filterButtons = document.querySelectorAll('.badge-filter') as NodeListOf<HTMLButtonElement>;
+    const noPostsMessage = document.getElementById('no-posts') as HTMLElement;
+    let visibleCount = 0;
+
+    // Update active filter button
+    filterButtons.forEach(btn => {
+      btn.classList.remove('active');
+      if (btn.dataset.filter === tag) {
+        btn.classList.add('active');
+      }
+    });
+
+    // Filter posts
+    cards.forEach(card => {
+      const cardTags = JSON.parse(card.dataset.tags || '[]');
+      const shouldShow = tag === 'all' || cardTags.includes(tag);
+      
+      if (shouldShow) {
+        card.style.display = 'block';
+        visibleCount++;
+      } else {
+        card.style.display = 'none';
+      }
+    });
+
+    // Show/hide empty state
+    if (noPostsMessage) {
+      if (visibleCount === 0) {
+        noPostsMessage.classList.remove('hidden');
+      } else {
+        noPostsMessage.classList.add('hidden');
+      }
+    }
+  }
+
+  // Make filterPosts available globally
+  (window as any).filterPosts = filterPosts;
+</script>
+
+<style>
+  .badge-filter {
+    @apply px-3 py-1 text-sm rounded-full border transition-colors cursor-pointer;
+    @apply border-gray-300 text-gray-600 hover:border-primary hover:text-primary;
+  }
+
+  .badge-filter.active {
+    @apply border-primary bg-primary text-white;
+  }
+
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

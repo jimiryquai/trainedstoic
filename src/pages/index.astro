@@ -1,27 +1,101 @@
 ---
-import { getApi } from "@/bknd.ts";
 import Layout from "@/layouts/Layout.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
 
-const api = await getApi(Astro.request.headers, { verify: true, mode: "dynamic" });
+const reader = createReader(process.cwd(), keystaticConfig);
 
-const { data } = await api.data.readMany("posts");
-const user = api.getUser();
+const homeContent = await reader.singletons.home.read();
+const posts = await reader.collections.posts.all();
+const featuredPosts = posts
+  .filter((post) => post.entry.featured)
+  .sort((a, b) => new Date(b.entry.publishedDate).getTime() - new Date(a.entry.publishedDate).getTime())
+  .slice(0, 3);
 ---
 
-<Layout title="Freedom Stack v2">
-  <section class="mx-auto flex max-w-md flex-col gap-4 p-6">
-    <h1 class="heading-1">Freedom Stack v2</h1>
-    {user?.email ? <p>Logged in as {user.email}</p> : <p>Not logged in</p>}
-    <h2 class="heading-2">Posts</h2>
-    <ul>
-      {
-        data.map((post) => (
-          <li>
-            <h3 class="heading-3">{post.title}</h3>
-            <p class="paragraph line-clamp-2">{post.content?.slice(0, 256)}</p>
-          </li>
-        ))
-      }
-    </ul>
+<Layout title="Trained Stoic - Timeless Wisdom for Modern Resilience">
+  <!-- Hero Section -->
+  <section class="bg-gradient-to-b from-primary/5 to-transparent py-16 md:py-24">
+    <div class="mx-auto max-w-7xl px-6">
+      <div class="mx-auto max-w-3xl text-center">
+        <h1 class="heading-1 mb-6">{homeContent?.hero.title}</h1>
+        <p class="text-lg text-muted-foreground mb-8 leading-relaxed">
+          {homeContent?.hero.subtitle}
+        </p>
+        <a href={homeContent?.hero.ctaLink} class="btn-primary">
+          {homeContent?.hero.ctaText}
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Posts Section -->
+  {featuredPosts.length > 0 && (
+    <section class="py-16">
+      <div class="mx-auto max-w-7xl px-6">
+        <div class="text-center mb-12">
+          <h2 class="heading-2 mb-4">{homeContent?.featuredPostsSection.title}</h2>
+          <p class="text-muted-foreground max-w-2xl mx-auto">
+            {homeContent?.featuredPostsSection.description}
+          </p>
+        </div>
+        
+        <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {featuredPosts.map((post) => (
+            <article class="card hover:shadow-lg transition-shadow">
+              <header>
+                <time class="text-sm text-muted-foreground">
+                  {new Date(post.entry.publishedDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+                <h3 class="heading-3 mt-2">
+                  <a href={`/blog/${post.slug}`} class="hover:text-primary transition-colors">
+                    {post.entry.title}
+                  </a>
+                </h3>
+              </header>
+              <section>
+                <p class="text-muted-foreground line-clamp-3">
+                  {post.entry.description}
+                </p>
+              </section>
+              <footer>
+                <div class="flex flex-wrap gap-2">
+                  {post.entry.tags?.slice(0, 3).map((tag) => (
+                    <span class="badge">{tag}</span>
+                  ))}
+                </div>
+              </footer>
+            </article>
+          ))}
+        </div>
+        
+        <div class="text-center mt-12">
+          <a href="/blog" class="btn-outline">View All Posts →</a>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Newsletter Section -->
+  <section class="bg-secondary/5 py-16">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="heading-2 mb-4">Stay Connected</h2>
+      <p class="text-muted-foreground mb-8">
+        Get weekly insights on stoic philosophy and practical wisdom delivered to your inbox.
+      </p>
+      <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+        <input
+          type="email"
+          placeholder="Enter your email"
+          class="flex-1 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+          required
+        />
+        <button type="submit" class="btn-primary">Subscribe</button>
+      </form>
+    </div>
   </section>
 </Layout>

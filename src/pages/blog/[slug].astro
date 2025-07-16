@@ -1,0 +1,220 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import SEO from "@/components/SEO.astro";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+import { marked } from "marked";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+
+// Get the slug from the URL
+const { slug } = Astro.params;
+
+// Get the specific post (SSR mode - no getStaticPaths needed)
+const post = await reader.collections.posts.read(slug!);
+
+if (!post) {
+  return Astro.redirect("/404");
+}
+
+// Get site settings for SEO
+const settings = await reader.singletons.settings.read();
+
+// Build full URL for structured data
+const fullUrl = new URL(`/blog/${slug}`, settings?.siteUrl || Astro.url.origin).toString();
+
+// Get related posts (same tags)
+const allPosts = await reader.collections.posts.all();
+const relatedPosts = allPosts
+  .filter(p => p.slug !== slug)
+  .filter(p => p.entry.tags?.some(tag => post.tags?.includes(tag)))
+  .slice(0, 3);
+
+// Format date and calculate reading time
+const publishedDate = new Date(post.publishedDate);
+
+// Handle content properly - check if it's a function or string
+const contentText = typeof post.content === 'function' ? await post.content() : post.content || '';
+const htmlContent = marked(contentText);
+const readingTime = Math.ceil(contentText.split(' ').length / 200);
+---
+
+<Layout title={`${post.title} - Trained Stoic`}>
+  <SEO
+    slot="head"
+    title={post.title}
+    description={post.description}
+    type="article"
+    image={post.image}
+    publishedDate={post.publishedDate}
+    author={post.author}
+    tags={post.tags}
+  />
+  
+  <article class="mx-auto max-w-4xl px-6 py-12">
+    <!-- Article Header -->
+    <header class="mb-12 text-center">
+      <div class="mb-6">
+        {post.tags?.map((tag) => (
+          <span class="badge mr-2">{tag}</span>
+        ))}
+      </div>
+      
+      <h1 class="heading-1 mb-6">{post.title}</h1>
+      
+      <div class="flex flex-wrap items-center justify-center gap-4 text-sm text-muted-foreground">
+        <div class="flex items-center gap-2">
+          <span>By {post.author}</span>
+        </div>
+        <div class="flex items-center gap-2">
+          <time datetime={post.publishedDate}>
+            {publishedDate.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric'
+            })}
+          </time>
+        </div>
+        <div class="flex items-center gap-2">
+          <span>{readingTime} min read</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Featured Image -->
+    <div class="mb-12">
+      <img
+        src={post.image || '/images/posts/default-placeholder.svg'}
+        alt={post.title}
+        class="w-full h-auto rounded-lg shadow-lg"
+        onerror="this.src='/images/posts/default-placeholder.svg'"
+      />
+    </div>
+
+    <!-- Article Content -->
+    <div class="prose prose-lg prose-gray max-w-none prose-headings:font-bold prose-headings:text-gray-900 prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-gray-700 prose-blockquote:text-gray-600 prose-blockquote:border-l-blue-500">
+      <Fragment set:html={htmlContent} />
+    </div>
+
+    <!-- Article Footer -->
+    <footer class="mt-12 pt-8 border-t">
+      <!-- Tags -->
+      <div class="mb-8">
+        <h3 class="text-sm font-semibold text-muted-foreground mb-4">Tags</h3>
+        <div class="flex flex-wrap gap-2">
+          {post.tags?.map((tag) => (
+            <span class="badge">{tag}</span>
+          ))}
+        </div>
+      </div>
+
+      <!-- Share Buttons -->
+      <div class="mb-8">
+        <h3 class="text-sm font-semibold text-muted-foreground mb-4">Share this article</h3>
+        <div class="flex gap-4">
+          <a
+            href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(fullUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-outline"
+          >
+            Share on Twitter
+          </a>
+          <a
+            href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(fullUrl)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-outline"
+          >
+            Share on LinkedIn
+          </a>
+        </div>
+      </div>
+    </footer>
+  </article>
+
+  <!-- Related Posts -->
+  {relatedPosts.length > 0 && (
+    <section class="mx-auto max-w-7xl px-6 py-12 border-t">
+      <h2 class="heading-2 mb-8 text-center">Related Articles</h2>
+      <div class="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        {relatedPosts.map((relatedPost) => (
+          <article class="card hover:shadow-lg transition-shadow">
+            <div class="aspect-video mb-4 overflow-hidden rounded-lg">
+              <img
+                src={relatedPost.entry.image || '/images/posts/default-placeholder.svg'}
+                alt={relatedPost.entry.title}
+                class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                onerror="this.src='/images/posts/default-placeholder.svg'"
+              />
+            </div>
+            
+            <header class="mb-4">
+              <div class="flex items-center gap-2 mb-2">
+                <time class="text-sm text-muted-foreground">
+                  {new Date(relatedPost.entry.publishedDate).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </time>
+                {relatedPost.entry.featured && (
+                  <span class="badge bg-primary/10 text-primary">Featured</span>
+                )}
+              </div>
+              
+              <h3 class="heading-3">
+                <a 
+                  href={`/blog/${relatedPost.slug}`} 
+                  class="hover:text-primary transition-colors"
+                >
+                  {relatedPost.entry.title}
+                </a>
+              </h3>
+            </header>
+
+            <section class="mb-4">
+              <p class="text-muted-foreground line-clamp-3">
+                {relatedPost.entry.description}
+              </p>
+            </section>
+
+            <footer class="flex flex-wrap gap-2">
+              {relatedPost.entry.tags?.slice(0, 3).map((tag) => (
+                <span class="badge">{tag}</span>
+              ))}
+            </footer>
+          </article>
+        ))}
+      </div>
+    </section>
+  )}
+
+  <!-- Structured Data for SEO -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": post.title,
+    "description": post.description,
+    "author": {
+      "@type": "Person",
+      "name": post.author
+    },
+    "datePublished": post.publishedDate,
+    "url": fullUrl,
+    "publisher": {
+      "@type": "Organization",
+      "name": settings?.siteName || "Trained Stoic",
+      "url": settings?.siteUrl || Astro.url.origin
+    }
+  })} />
+</Layout>
+
+<style>
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

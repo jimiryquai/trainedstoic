@@ -1,0 +1,133 @@
+---
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../keystatic.config";
+
+const reader = createReader(process.cwd(), keystaticConfig);
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  type?: "website" | "article";
+  publishedDate?: string;
+  modifiedDate?: string;
+  author?: string;
+  tags?: string[];
+  noindex?: boolean;
+}
+
+const {
+  title: pageTitle,
+  description: pageDescription,
+  image: pageImage,
+  type = "website",
+  publishedDate,
+  modifiedDate,
+  author,
+  tags,
+  noindex = false,
+} = Astro.props;
+
+// Get site settings from Keystatic
+const settings = await reader.singletons.settings.read();
+const siteName = settings?.siteName || "Trained Stoic";
+const siteDescription = settings?.siteDescription || "Timeless wisdom for modern resilience";
+const siteUrl = settings?.siteUrl || "https://trainedstoic.com";
+
+// Build meta values
+const title = pageTitle ? `${pageTitle} | ${siteName}` : siteName;
+const description = pageDescription || siteDescription;
+const image = pageImage || `${siteUrl}/images/og-default.jpg`;
+const url = `${siteUrl}${Astro.url.pathname}`;
+
+// JSON-LD structured data
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": type === "article" ? "Article" : "WebSite",
+  name: title,
+  description,
+  url,
+  image,
+  ...(type === "article" && {
+    author: {
+      "@type": "Person",
+      name: author || "Trained Stoic",
+    },
+    publisher: {
+      "@type": "Organization",
+      name: siteName,
+      url: siteUrl,
+    },
+    datePublished: publishedDate,
+    dateModified: modifiedDate || publishedDate,
+    keywords: tags?.join(", "),
+  }),
+};
+---
+
+<!-- Basic Meta Tags -->
+<title>{title}</title>
+<meta name="description" content={description} />
+<meta name="author" content={author || "Trained Stoic"} />
+<link rel="canonical" href={url} />
+
+<!-- Robots -->
+{noindex && <meta name="robots" content="noindex, nofollow" />}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={image} />
+<meta property="og:url" content={url} />
+<meta property="og:site_name" content={siteName} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={image} />
+{settings?.social?.twitter && (
+  <meta name="twitter:creator" content={`@${settings.social.twitter}`} />
+)}
+
+<!-- Article specific tags -->
+{type === "article" && (
+  <>
+    <meta property="article:author" content={author || "Trained Stoic"} />
+    {publishedDate && (
+      <meta property="article:published_time" content={publishedDate} />
+    )}
+    {modifiedDate && (
+      <meta property="article:modified_time" content={modifiedDate} />
+    )}
+    {tags?.map((tag) => (
+      <meta property="article:tag" content={tag} />
+    ))}
+  </>
+)}
+
+<!-- JSON-LD Structured Data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+<!-- Favicon -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="manifest" href="/site.webmanifest" />
+
+<!-- Theme Color -->
+<meta name="theme-color" content="#1f2937" />
+<meta name="msapplication-TileColor" content="#1f2937" />
+
+<!-- UserMaven Analytics -->
+{settings?.analytics?.userMavenId && (
+  <script is:inline define:vars={{userMavenId: settings.analytics.userMavenId}}>
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s);j.async=true;j.src=
+    'https://www.usermaven.com/js/'+i+'/um.js';f.parentNode.insertBefore(j,f);
+    })(window,document,'script','userMaven',userMavenId);
+  </script>
+)}
