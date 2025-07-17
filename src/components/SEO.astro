@@ -14,6 +14,7 @@ interface Props {
   author?: string;
   tags?: string[];
   noindex?: boolean;
+  slug?: string; // Add slug prop for OG image generation
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   author,
   tags,
   noindex = false,
+  slug,
 } = Astro.props;
 
 // Get site settings from Keystatic
@@ -37,7 +39,24 @@ const siteUrl = settings?.siteUrl || "https://trainedstoic.com";
 // Build meta values
 const title = pageTitle ? `${pageTitle} | ${siteName}` : siteName;
 const description = pageDescription || siteDescription;
-const image = pageImage || `${siteUrl}/images/og-default.jpg`;
+
+// Generate dynamic OG image URL for articles using slug, fallback to static for other pages
+let image: string;
+if (type === "article" && slug) {
+  // Use slug-based OG image generation
+  image = `${siteUrl}/api/og/${slug}.png`;
+} else if (type === "article" && pageTitle) {
+  // Fallback to extracting slug from URL if not provided
+  const urlSlug = Astro.url.pathname.split('/').pop();
+  if (urlSlug && urlSlug !== '' && urlSlug !== 'index') {
+    image = `${siteUrl}/api/og/${urlSlug}.png`;
+  } else {
+    image = pageImage || `${siteUrl}/images/og-default.jpg`;
+  }
+} else {
+  image = pageImage || `${siteUrl}/images/og-default.jpg`;
+}
+
 const url = `${siteUrl}${Astro.url.pathname}`;
 
 // JSON-LD structured data
@@ -79,6 +98,10 @@ const jsonLd = {
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={image} />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:type" content="image/png" />
+<meta property="og:image:alt" content={`${title} - ${description}`} />
 <meta property="og:url" content={url} />
 <meta property="og:site_name" content={siteName} />
 
@@ -87,8 +110,12 @@ const jsonLd = {
 <meta name="twitter:title" content={title} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={image} />
+<meta name="twitter:image:alt" content={`${title} - ${description}`} />
 {settings?.social?.twitter && (
   <meta name="twitter:creator" content={`@${settings.social.twitter}`} />
+)}
+{settings?.social?.twitter && (
+  <meta name="twitter:site" content={`@${settings.social.twitter}`} />
 )}
 
 <!-- Article specific tags -->
